@@ -1,5 +1,6 @@
 import 'package:bloc_weather/features/search/bloc/city_search_cubit.dart';
 import 'package:bloc_weather/features/search/bloc/city_search_state.dart';
+import 'package:bloc_weather/features/weather_detail/ui/weather_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -87,9 +88,26 @@ class _CitySearchPageState extends State<CitySearchPage> {
       itemCount: cities.length,
       itemBuilder: (context, index) {
         CitySearchModel city = cities[index];
-        return ListTile(
-          title: Text(city.name),
-          subtitle: Text(city.country),
+        return Container(
+          margin: EdgeInsets.only(top: 12),
+          child: Card(
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => WeatherDetailPage(
+                      name: city.name,
+                      latitude: city.latitude,
+                      longitude: city.longitude,
+                    ),
+                  ),
+                );
+              },
+              title: Text(city.name),
+              subtitle: Text(city.country),
+            ),
+          ),
         );
       },
     );
